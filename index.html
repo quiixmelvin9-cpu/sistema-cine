@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Reserva de Cine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Cine Reserva</h1>
+      <p class="subtitle">Reserva tus asientos en minutos</p>
+    </div>
+    <button id="themeToggle" class="btn secondary" type="button">Modo Oscuro</button>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="panel-title-wrap">
+        <h2>Cartelera</h2>
+        <label class="currency-wrap" for="currency">
+          Moneda:
+          <select id="currency">
+            <option value="GTQ">Quetzales (Q)</option>
+            <option value="USD">Dólares ($)</option>
+          </select>
+        </label>
+      </div>
+      <div id="movieGrid" class="movie-grid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Selecciona tus asientos</h2>
+      <p class="legend">
+        <span><i class="dot available"></i> Disponible</span>
+        <span><i class="dot selected"></i> Seleccionado</span>
+        <span><i class="dot occupied"></i> Ocupado</span>
+      </p>
+      <div class="screen">Pantalla</div>
+      <div id="seatMap" class="seat-map"></div>
+    </section>
+
+    <section class="panel summary">
+      <h2>Resumen</h2>
+      <div id="summaryContent">
+        <p>Selecciona una película, horario y asientos.</p>
+      </div>
+      <div class="actions">
+        <button id="cancelBtn" class="btn danger" type="button">Cancelar Reserva</button>
+      </div>
+    </section>
+
+    <section class="panel payment">
+      <h2>Mini Pasarela de Pago</h2>
+      <form id="paymentForm" novalidate>
+        <div class="grid-2">
+          <label>
+            Nombre en tarjeta
+            <input type="text" id="cardName" placeholder="Nombre completo" required>
+          </label>
+          <label>
+            Número de tarjeta
+            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+          </label>
+          <label>
+            Vencimiento
+            <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+          </label>
+          <label>
+            CVV
+            <input type="password" id="cardCVV" placeholder="123" maxlength="4" required>
+          </label>
+        </div>
+        <label>
+          Monto a pagar
+          <input type="text" id="paymentAmount" readonly>
+        </label>
+        <div class="actions">
+          <button class="btn" type="submit">Pagar Reserva</button>
+          <button id="pdfBtn" class="btn secondary" type="button" disabled>Generar Boleto PDF</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Sistema demostrativo de reservas de cine</small>
+  </footer>
+
+  <!-- Librería para alertas estilizadas -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Librería para generar PDF en el navegador -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
