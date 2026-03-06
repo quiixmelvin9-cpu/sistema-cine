@@ -52,6 +52,20 @@ body {
   overflow-x: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 20%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 40%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 60% 80%, #ffffff 0 1px, transparent 1px);
+  background-size: 28px 28px, 36px 36px, 44px 44px;
+}
+
 .topbar,
 .container,
 .footer {
@@ -70,6 +84,16 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   position: sticky;
   top: 0;
+}
+
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 h1,
@@ -114,6 +138,19 @@ h2 {
   border-radius: 14px;
   box-shadow: var(--shadow);
   padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.65;
 }
 
 .panel:nth-of-type(1),
@@ -158,11 +195,19 @@ input {
   background: rgba(255, 255, 255, 0.4);
   color: var(--text);
   font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 body.dark select,
 body.dark input {
   background: rgba(9, 7, 12, 0.45);
+}
+
+select:focus-visible,
+input:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 168, 59, 0.22);
 }
 
 .movie-grid {
@@ -179,11 +224,26 @@ body.dark input {
   grid-template-rows: 230px auto;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), transparent);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
 }
 
 .movie-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 24px rgba(0, 0, 0, 0.22);
+}
+
+.movie-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 45%, rgba(255, 255, 255, 0.18) 50%, transparent 55%);
+  transform: translateX(-120%);
+  transition: transform 0.5s ease;
+}
+
+.movie-card:hover::after {
+  transform: translateX(120%);
 }
 
 .movie-card img {
@@ -219,6 +279,7 @@ body.dark input {
 
 .btn:hover {
   filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 .btn.secondary {
@@ -234,6 +295,11 @@ body.dark input {
 
 .btn.danger {
   background: linear-gradient(180deg, #d23636, #a11f1f);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212, 168, 59, 0.25), 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .legend {
@@ -298,6 +364,7 @@ body.dark .screen {
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.12s ease, filter 0.2s ease;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
 }
 
 .seat:hover {
@@ -322,6 +389,10 @@ body.dark .screen {
   margin: 0.8rem 0 1rem;
   color: var(--muted);
   line-height: 1.5;
+}
+
+.summary #summaryContent strong {
+  color: var(--text);
 }
 
 .grid-2 {
@@ -353,6 +424,37 @@ label {
   text-align: center;
   color: var(--muted);
   margin: 0.8rem 0 1.4rem;
+  border-top: 1px dashed var(--border);
+  padding-top: 0.8rem;
+}
+
+.panel,
+.movie-card,
+.topbar {
+  animation: fadeSlideIn 0.45s ease both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .movie-card,
+  .topbar,
+  .btn,
+  .seat,
+  .movie-card::after {
+    animation: none;
+    transition: none;
+  }
 }
 
 @media (max-width: 640px) {
